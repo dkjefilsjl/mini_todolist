@@ -13,6 +13,7 @@ import {
   todoListLastId,
   todoListState,
 } from "../recoil/todo-recoil";
+import { RemoveButton } from "./todo-list";
 
 export const Categorys = () => {
   const [lists, setLists] = useRecoilState<todoListTypes[]>(todoListState);
@@ -102,10 +103,10 @@ export const Categorys = () => {
   if (loading) return <div>로딩중...</div>;
   return (
     <>
-      <span>
+      <div>
         {categorys.map((category: categoryTypes) => {
           return (
-            <span key={category.id}>
+            <div key={category.id}>
               <input
                 type="checkbox"
                 onChange={() => {
@@ -122,20 +123,20 @@ export const Categorys = () => {
                 }}
               />
               {category.name}
-              <button
+              <RemoveButton
                 onClick={() => {
                   setCallRemove(category.id);
                 }}
               >
                 {" "}
-                삭제{" "}
-              </button>
+                x{" "}
+              </RemoveButton>
               {"   "}
-            </span>
+            </div>
           );
         })}
         <input onKeyDown={onKeyPress} />
-      </span>
+      </div>
     </>
   );
 };
