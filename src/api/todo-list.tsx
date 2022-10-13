@@ -2,8 +2,13 @@ import axios from "axios";
 import { setDefaultResultOrder } from "dns/promises";
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { todoListTypes } from "../interface/todo-list-state-interface";
 import {
+  categoryTypes,
+  todoListTypes,
+} from "../interface/todo-list-state-interface";
+import {
+  categoryState,
+  categoryIdSelect,
   todoListContent,
   todoListLastId,
   todoListState,
@@ -15,6 +20,9 @@ export const TodoLists = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [callRemove, setCallRemove] = useState<number>();
   const lastId = useRecoilValue<number>(todoListLastId);
+  const [categorys, setCategorys] =
+    useRecoilState<categoryTypes[]>(categoryState);
+  const [categroyId, setCategroyId] = useRecoilState<number>(categoryIdSelect);
 
   /*read*/
   useEffect(() => {
@@ -44,6 +52,7 @@ export const TodoLists = () => {
             id: lastId + 1,
             contents: content,
             isCompleted: false,
+            categoryId: categroyId,
           }),
           {
             headers: {
@@ -86,34 +95,41 @@ export const TodoLists = () => {
   return (
     <>
       {lists.map((list: todoListTypes) => {
-        return (
-          <div key={list.id}>
-            <input
-              type="checkbox"
-              onChange={() => {
-                setLists(
-                  lists.map((slist: todoListTypes) => {
-                    return slist.id === list.id
-                      ? {
-                          ...slist,
-                          isCompleted: !slist.isCompleted,
-                        }
-                      : slist;
-                  })
-                );
-              }}
-            />
-            {list.isCompleted ? list.contents : "babo"}
-            <button
-              onClick={() => {
-                setCallRemove(list.id);
-              }}
-            >
-              {" "}
-              삭제{" "}
-            </button>
-          </div>
-        );
+        let flag: boolean = true;
+        categorys.map((category: categoryTypes) => {
+          if (category.id === list.categoryId) flag = category.isChecked;
+        });
+        if (!flag) return <div key={list.id}></div>;
+        else {
+          return (
+            <div key={list.id}>
+              <input
+                type="checkbox"
+                onChange={() => {
+                  setLists(
+                    lists.map((slist: todoListTypes) => {
+                      return slist.id === list.id
+                        ? {
+                            ...slist,
+                            isCompleted: !slist.isCompleted,
+                          }
+                        : slist;
+                    })
+                  );
+                }}
+              />
+              {list.isCompleted ? list.contents : "babo"}
+              <button
+                onClick={() => {
+                  setCallRemove(list.id);
+                }}
+              >
+                {" "}
+                삭제{" "}
+              </button>
+            </div>
+          );
+        }
       })}
     </>
   );

@@ -1,0 +1,86 @@
+{
+  "lists": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "isCompleted": false,
+      "categoryId": 1
+    },
+    {
+      "id": 5,
+      "contents": "awkegjwejg",
+      "isCompleted": false,
+      "categoryId": 1
+    },
+    {
+      "id": 6,
+      "contents": "awkegjwejgawjegiowjge",
+      "isCompleted": false,
+      "categoryId": 1
+    },
+    {
+      "id": 7,
+      "contents": "awkegjwejgawjegiowjgewekajgwj",
+      "isCompleted": false,
+      "categoryId": 2
+    },
+    {
+      "id": 8,
+      "contents": "weew",
+      "isCompleted": false,
+      "categoryId": 2
+    },
+    {
+      "id": 9,
+      "contents": "weewawejgijwle",
+      "isCompleted": false,
+      "categoryId": 2
+    },
+    {
+      "id": 10,
+      "contents": "awoejigoawje",
+      "isCompleted": false,
+      "categoryId": 2
+    },
+    {
+      "id": 11,
+      "contents": "awoejigoawje",
+      "isCompleted": false,
+      "categoryId": 3
+    },
+    {
+      "id": 12,
+      "contents": "awoejigoawje",
+      "isCompleted": false,
+      "categoryId": 3
+    },
+    {
+      "id": 13,
+      "contents": "seo",
+      "isCompleted": false,
+      "categoryId": 1
+    }
+  ],
+  "categorys": [
+    {
+      "id": 0,
+      "name": "none",
+      "isChecked": false
+    },
+    {
+      "id": 1,
+      "name": "awegweg",
+      "isChecked": false
+    },
+    {
+      "id": 2,
+      "name": "weagwe",
+      "isChecked": false
+    },
+    {
+      "id": 3,
+      "name": "weagwe",
+      "isChecked": false
+    }
+  ]
+}

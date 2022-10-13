@@ -4,3 +4,9 @@ export interface todoListTypes {
   isCompleted: boolean;
   categoryId: number;
 }
+
+export interface categoryTypes {
+  id: number;
+  name: string;
+  isChecked: boolean;
+}
