@@ -3,18 +3,9 @@ import { setDefaultResultOrder } from "dns/promises";
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import {
-  categoryTypes,
-  todoListTypes,
-} from "../interface/todo-list-state-interface";
-import {
-  categoryState,
-  categoryIdSelect,
-  todoListContent,
-  todoListLastId,
-  todoListState,
-} from "../recoil/todo-recoil";
-import { deleteProps, OnRead, removeLists } from "./todo-list-temp";
+import { todoListTypes } from "../../interface/todo-list-state-interface";
+import { todoListState } from "../../recoil/todo-recoil";
+import { deleteProps, OnRead, removeLists } from "../../api/todo-list-temp";
 
 interface todolistProps {
   id: number;
@@ -28,13 +19,7 @@ export const RemoveButton = styled.button`
 
 export const TodoComponent = (props: todolistProps) => {
   const [lists, setLists] = useRecoilState<todoListTypes[]>(todoListState);
-  const [content, setContent] = useRecoilState<string>(todoListContent);
   const [loading, setLoading] = useState<boolean>(false);
-  const [callRemove, setCallRemove] = useState<number>();
-  const lastId = useRecoilValue<number>(todoListLastId);
-  const [categorys, setCategorys] =
-    useRecoilState<categoryTypes[]>(categoryState);
-  const [categoryId, setcategoryId] = useRecoilState<number>(categoryIdSelect);
 
   useEffect(() => {
     const fetchLists = async () => {
@@ -53,12 +38,6 @@ export const TodoComponent = (props: todolistProps) => {
   return (
     <>
       {lists.map((list: todoListTypes) => {
-        {
-          /*let flag: boolean = true;
-          categorys.map((category: categoryTypes) => {
-          if (category.id === list.categoryId) flag = category.isChecked;
-        });*/
-        }
         if (props.id !== list.categoryId) return <div key={list.id}></div>;
         else {
           return (
@@ -81,10 +60,9 @@ export const TodoComponent = (props: todolistProps) => {
               {list.isCompleted ? "babo" : list.contents}
               <RemoveButton
                 onClick={() => {
-                  const props: deleteProps = {
+                  removeLists({
                     link: `http://localhost:3000/lists/${list.id}`,
-                  };
-                  removeLists(props);
+                  });
                   setLists(lists.filter((li) => li.id !== list.id));
                 }}
               >

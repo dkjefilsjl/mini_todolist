@@ -13,16 +13,15 @@ import {
   todoListLastId,
   todoListState,
 } from "../recoil/todo-recoil";
-import { RemoveButton } from "./todo-component";
+import { RemoveButton } from "../containers/todo-list/todo-component";
+import { onCreate, removeLists } from "./todo-list-temp";
 
 export const Categorys = () => {
-  const [lists, setLists] = useRecoilState<todoListTypes[]>(todoListState);
   const [categorys, setCategorys] =
     useRecoilState<categoryTypes[]>(categoryState);
-  const [rname, setRname] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [content, setContent] = useState<string>("");
   const lastId = useRecoilValue<number>(categoryLastId);
-  const [callRemove, setCallRemove] = useState<number>();
 
   /*read*/
   useEffect(() => {
@@ -40,64 +39,24 @@ export const Categorys = () => {
     fetchLists();
   }, []);
 
-  /*create*/
-  useEffect(() => {
-    const addLists = async () => {
-      if (!rname || rname === "") return;
-      try {
-        setLoading(true);
-        const res = await axios.post(
-          "http://localhost:3000/categorys",
-          JSON.stringify({
-            id: lastId + 1,
-            name: rname,
-            isChecked: false,
-          }),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setCategorys(categorys.concat(res.data));
-        console.log(res.data);
-      } catch (e) {
-        console.log(e);
-      }
-      setRname("");
-      setLoading(false);
-    };
-
-    addLists();
-  }, [rname, setRname]);
-
-  /*delete*/
-  useEffect(() => {
-    const removeLists = async (rid: number) => {
-      try {
-        setLoading(true);
-        const res = await axios.delete(
-          `http://localhost:3000/categorys/${rid}`
-        );
-        setCategorys(categorys.filter((category) => category.id !== rid));
-        console.log(res.data);
-      } catch (e) {
-        console.log(e);
-      }
-      setLoading(false);
-    };
-    categorys.map((category) => {
-      if (category.id === callRemove) removeLists(category.id);
-    });
-  }, [callRemove, setCallRemove]);
-
-  /*update*/
-
-  const onClick = (value: string) => {
-    setRname(value);
+  const addHandeler = (e: any) => {
+    e.preventDefault();
+    console.log(e.target);
+    setContent(e.target.value);
+    console.log("content = " + content);
   };
+
   const onKeyPress = (e: any) => {
-    if (e.key === "Enter") onClick(e.target.value);
+    if (e.key === "Enter") {
+      const data: categoryTypes = {
+        id: lastId + 1,
+        name: e.target.value,
+        isChecked: false,
+      };
+      onCreate(data, "http://localhost:3000/categorys");
+      setLists(categorys.concat(data));
+      console.log("data = " + data);
+    }
   };
 
   if (loading) return <div>로딩중...</div>;
@@ -125,7 +84,10 @@ export const Categorys = () => {
               {category.name}
               <RemoveButton
                 onClick={() => {
-                  setCallRemove(category.id);
+                  removeLists({
+                    link: `http://localhost:3000/lists/${category.id}`,
+                  });
+                  setCategorys(categorys.filter((li) => li.id !== category.id));
                 }}
               >
                 {" "}
@@ -135,8 +97,17 @@ export const Categorys = () => {
             </div>
           );
         })}
-        <input onKeyDown={onKeyPress} />
+        <input
+          value={content}
+          onKeyDown={onKeyPress}
+          onChange={(e) => {
+            addHandeler(e);
+          }}
+        />
       </div>
     </>
   );
 };
+function setLists(arg0: any) {
+  throw new Error("Function not implemented.");
+}

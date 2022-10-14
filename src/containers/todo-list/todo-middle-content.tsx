@@ -1,7 +1,7 @@
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { Categorys } from "../../api/category";
-import { TodoComponent } from "../../api/todo-component";
+import { TodoComponent } from "./todo-component";
 import { categoryTypes } from "../../interface/todo-list-state-interface";
 import { categoryState } from "../../recoil/todo-recoil";
 
