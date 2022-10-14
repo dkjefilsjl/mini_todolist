@@ -63,23 +63,18 @@
   ],
   "categorys": [
     {
-      "id": 0,
-      "name": "none",
+      "id": 3,
+      "name": "weagwe",
       "isChecked": false
     },
     {
-      "id": 1,
+      "id": 4,
       "name": "awegweg",
       "isChecked": false
     },
     {
-      "id": 2,
-      "name": "weagwe",
-      "isChecked": false
-    },
-    {
-      "id": 3,
-      "name": "weagwe",
+      "id": 5,
+      "name": "seoyeon",
       "isChecked": false
     }
   ]

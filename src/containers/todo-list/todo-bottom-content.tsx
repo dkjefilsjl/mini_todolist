@@ -1,10 +1,22 @@
-import { useRecoilState } from "recoil";
+import { useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { Categorys } from "../../api/category";
-import { TodoLists } from "../../api/todo-list";
+//import { AddLists } from "../../api/category-temp";
+import { onCreate } from "../../api/todo-list-temp";
 import { SelectVariants } from "../../components/category/select-mui";
-import { categoryTypes } from "../../interface/todo-list-state-interface";
-import { categoryState, todoListContent } from "../../recoil/todo-recoil";
+import {
+  categoryTypes,
+  todoListTypes,
+} from "../../interface/todo-list-state-interface";
+import {
+  categoryIdSelect,
+  categoryLastId,
+  categoryState,
+  todoListContent,
+  todoListLastId,
+  todoListState,
+} from "../../recoil/todo-recoil";
 
 const BottomStyle = styled.div`
   margin-top: 1rem;
@@ -23,20 +35,49 @@ const SelectBox = styled.div`
   margin-left: 2%;
 `;
 
-const TextBox = styled.input`
+const TextInput = styled.input`
   min-width: 80%;
   margin-bottom: 0.5rem;
 `;
 
-export const BottomContent = () => {
-  const [content, setContent] = useRecoilState<string>(todoListContent);
+export interface dataProps {
+  data: todoListTypes;
+  link: string;
+}
 
-  const onClick = (value: string) => {
-    setContent(value);
+export const BottomContent = () => {
+  const [content, setContent] = useState<string>("");
+  const lastId = useRecoilValue<number>(todoListLastId);
+  const [categoryId, setcategoryId] = useRecoilState<number>(categoryIdSelect);
+  const [lists, setLists] = useRecoilState<todoListTypes[]>(todoListState);
+
+  const addHandeler = (e: any) => {
+    e.preventDefault();
+    console.log(e.target);
+    setContent(e.target.value);
+    console.log("content = " + content);
   };
 
+  /*const deleteHandeler = (e) => {
+    e.preventDefault();
+  }*/
+
+  /*const onClick = (value: string) => {
+    setContent(value);
+  };
+*/
   const onKeyPress = (e: any) => {
-    if (e.key === "Enter") onClick(e.target.value);
+    if (e.key === "Enter") {
+      const data: todoListTypes = {
+        id: lastId + 1,
+        contents: content,
+        isCompleted: false,
+        categoryId: categoryId,
+      };
+      onCreate(data, "http://localhost:3000/lists");
+      setLists(lists.concat(data));
+      console.log("data = " + data);
+    }
   };
   return (
     <>
@@ -44,7 +85,13 @@ export const BottomContent = () => {
         <SelectBox>
           <SelectVariants />
         </SelectBox>
-        <TextBox onKeyDown={onKeyPress}></TextBox>
+        <TextInput
+          value={content}
+          onKeyDown={onKeyPress}
+          onChange={(e) => {
+            addHandeler(e);
+          }}
+        ></TextInput>
       </BottomStyle>
     </>
   );

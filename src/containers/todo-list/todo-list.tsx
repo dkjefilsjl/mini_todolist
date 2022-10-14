@@ -12,23 +12,12 @@ import { BottomContent } from "./todo-bottom-content";
 import { ListPrint } from "./todo-middle-content";
 import { TodoContent } from "./todo-top-content";
 
-const TodoList = () => {
-  /* const [content, setContent] = useRecoilState<string>(todoListContent);
-
-  const onClick = (value: string) => {
-    setContent(value);
-  };
-  const onKeyPress = (e: any) => {
-    if (e.key === "Enter") onClick(e.target.value);
-  };
-*/
+export const TodoList = () => {
   return (
     <>
       <TodoContent />
       <ListPrint />
       <BottomContent />
-      {/*<SelectVariants />
-      <input onKeyDown={onKeyPress} />*/}
     </>
   );
 };
