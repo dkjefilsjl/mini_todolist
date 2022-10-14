@@ -61,20 +61,17 @@ export const onCreate = async (
 };
 
 /*delete*/
-/*
-    const removeLists = async (rid: number) => {
-      try {
-        setLoading(true);
-        const res = await axios.delete(`http://localhost:3000/lists/${rid}`);
-        setLists(lists.filter((list) => list.id !== rid));
-        console.log(res.data);
-      } catch (e) {
-        console.log(e);
-      }
-      setLoading(false);
-    };
-    lists.map((list) => {
-      if (list.id === callRemove) removeLists(list.id);
-    });
-*/
+
+export interface deleteProps {
+  link: string;
+}
+export const removeLists = async (props: deleteProps) => {
+  try {
+    const res = await axios.delete(props.link);
+    console.log(res.data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 /*update*/

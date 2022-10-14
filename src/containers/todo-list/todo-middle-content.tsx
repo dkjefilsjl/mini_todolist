@@ -1,7 +1,7 @@
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { Categorys } from "../../api/category";
-import { TodoLists } from "../../api/todo-list";
+import { TodoComponent } from "../../api/todo-component";
 import { categoryTypes } from "../../interface/todo-list-state-interface";
 import { categoryState } from "../../recoil/todo-recoil";
 
@@ -55,7 +55,7 @@ export const ListPrint = () => {
                 <CategoryStyle>
                   <CategoryTitle>{category.name}</CategoryTitle>
                   <CategoryContent>
-                    <TodoLists id={category.id} />
+                    <TodoComponent id={category.id} />
                   </CategoryContent>
                 </CategoryStyle>
               </div>

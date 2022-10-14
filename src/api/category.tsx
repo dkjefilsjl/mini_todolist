@@ -13,7 +13,7 @@ import {
   todoListLastId,
   todoListState,
 } from "../recoil/todo-recoil";
-import { RemoveButton } from "./todo-list";
+import { RemoveButton } from "./todo-component";
 
 export const Categorys = () => {
   const [lists, setLists] = useRecoilState<todoListTypes[]>(todoListState);

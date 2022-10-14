@@ -14,6 +14,7 @@ import {
   todoListLastId,
   todoListState,
 } from "../recoil/todo-recoil";
+import { deleteProps, OnRead, removeLists } from "./todo-list-temp";
 
 interface todolistProps {
   id: number;
@@ -25,7 +26,7 @@ export const RemoveButton = styled.button`
   color: #a81414;
 `;
 
-export const TodoLists = (props: todolistProps) => {
+export const TodoComponent = (props: todolistProps) => {
   const [lists, setLists] = useRecoilState<todoListTypes[]>(todoListState);
   const [content, setContent] = useRecoilState<string>(todoListContent);
   const [loading, setLoading] = useState<boolean>(false);
@@ -35,72 +36,18 @@ export const TodoLists = (props: todolistProps) => {
     useRecoilState<categoryTypes[]>(categoryState);
   const [categoryId, setcategoryId] = useRecoilState<number>(categoryIdSelect);
 
-  /*read*/
   useEffect(() => {
     const fetchLists = async () => {
       try {
-        setLoading(true);
         const res = await axios.get("http://localhost:3000/lists");
         setLists(res.data);
         console.log("fetch = " + res.data);
       } catch (e) {
         console.log(e);
       }
-      setLoading(false);
     };
     fetchLists();
   }, []);
-
-  /*create*/
-  useEffect(() => {
-    const addLists = async () => {
-      if (!content || content === "") return;
-      try {
-        setLoading(true);
-        const res = await axios.post(
-          "http://localhost:3000/lists",
-          JSON.stringify({
-            id: lastId + 1,
-            contents: content,
-            isCompleted: false,
-            categoryId: categoryId,
-          }),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setLists(lists.concat(res.data));
-        console.log(res.data);
-      } catch (e) {
-        console.log(e);
-      }
-      setLoading(false);
-    };
-
-    addLists();
-  }, [content, setContent]);
-
-  /*delete*/
-  useEffect(() => {
-    const removeLists = async (rid: number) => {
-      try {
-        setLoading(true);
-        const res = await axios.delete(`http://localhost:3000/lists/${rid}`);
-        setLists(lists.filter((list) => list.id !== rid));
-        console.log(res.data);
-      } catch (e) {
-        console.log(e);
-      }
-      setLoading(false);
-    };
-    lists.map((list) => {
-      if (list.id === callRemove) removeLists(list.id);
-    });
-  }, [callRemove, setCallRemove]);
-
-  /*update*/
 
   if (loading) return <div>로딩중...</div>;
   return (
@@ -134,7 +81,11 @@ export const TodoLists = (props: todolistProps) => {
               {list.isCompleted ? "babo" : list.contents}
               <RemoveButton
                 onClick={() => {
-                  setCallRemove(list.id);
+                  const props: deleteProps = {
+                    link: `http://localhost:3000/lists/${list.id}`,
+                  };
+                  removeLists(props);
+                  setLists(lists.filter((li) => li.id !== list.id));
                 }}
               >
                 {" "}
