@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Categorys } from "../../api/category";
+import { Categorys } from "./category";
 
 const TopContent = styled.div`
   display: flex;

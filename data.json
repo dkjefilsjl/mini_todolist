@@ -59,6 +59,12 @@
       "contents": "seo",
       "isCompleted": false,
       "categoryId": 1
+    },
+    {
+      "id": 14,
+      "contents": "seoyeon",
+      "isCompleted": false,
+      "categoryId": 6
     }
   ],
   "categorys": [
@@ -75,6 +81,11 @@
     {
       "id": 5,
       "name": "seoyeon",
+      "isChecked": false
+    },
+    {
+      "id": 6,
+      "name": "himy",
       "isChecked": false
     }
   ]

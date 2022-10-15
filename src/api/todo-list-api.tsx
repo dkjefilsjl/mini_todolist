@@ -1,5 +1,4 @@
 import axios from "axios";
-import { setDefaultResultOrder } from "dns/promises";
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -7,13 +6,7 @@ import {
   categoryTypes,
   todoListTypes,
 } from "../interface/todo-list-state-interface";
-import {
-  categoryState,
-  categoryIdSelect,
-  todoListContent,
-  todoListLastId,
-  todoListState,
-} from "../recoil/todo-recoil";
+import { todoListState } from "../recoil/todo-recoil";
 
 interface todolistProps {
   id: number;

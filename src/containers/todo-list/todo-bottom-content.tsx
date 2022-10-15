@@ -1,19 +1,11 @@
 import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { Categorys } from "../../api/category";
-//import { AddLists } from "../../api/category-temp";
-import { onCreate } from "../../api/todo-list-temp";
+import { onCreate } from "../../api/todo-list-api";
 import { SelectVariants } from "../../components/category/select-mui";
-import {
-  categoryTypes,
-  todoListTypes,
-} from "../../interface/todo-list-state-interface";
+import { todoListTypes } from "../../interface/todo-list-state-interface";
 import {
   categoryIdSelect,
-  categoryLastId,
-  categoryState,
-  todoListContent,
   todoListLastId,
   todoListState,
 } from "../../recoil/todo-recoil";
@@ -58,14 +50,6 @@ export const BottomContent = () => {
     console.log("content = " + content);
   };
 
-  /*const deleteHandeler = (e) => {
-    e.preventDefault();
-  }*/
-
-  /*const onClick = (value: string) => {
-    setContent(value);
-  };
-*/
   const onKeyPress = (e: any) => {
     if (e.key === "Enter") {
       const data: todoListTypes = {

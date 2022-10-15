@@ -1,20 +1,10 @@
 import axios from "axios";
-import { setDefaultResultOrder } from "dns/promises";
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  categoryTypes,
-  todoListTypes,
-} from "../interface/todo-list-state-interface";
-import {
-  categoryLastId,
-  categoryState,
-  todoListContent,
-  todoListLastId,
-  todoListState,
-} from "../recoil/todo-recoil";
-import { RemoveButton } from "../containers/todo-list/todo-component";
-import { onCreate, removeLists } from "./todo-list-temp";
+import { categoryTypes } from "../../interface/todo-list-state-interface";
+import { categoryLastId, categoryState } from "../../recoil/todo-recoil";
+import { RemoveButton } from "./todo-component";
+import { onCreate, removeLists } from "../../api/todo-list-api";
 
 export const Categorys = () => {
   const [categorys, setCategorys] =
@@ -22,6 +12,7 @@ export const Categorys = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [content, setContent] = useState<string>("");
   const lastId = useRecoilValue<number>(categoryLastId);
+  const [lists, setLists] = useRecoilState<categoryTypes[]>(categoryState);
 
   /*read*/
   useEffect(() => {
@@ -108,6 +99,3 @@ export const Categorys = () => {
     </>
   );
 };
-function setLists(arg0: any) {
-  throw new Error("Function not implemented.");
-}

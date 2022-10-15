@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { todoListTypes } from "../../interface/todo-list-state-interface";
 import { todoListState } from "../../recoil/todo-recoil";
-import { deleteProps, OnRead, removeLists } from "../../api/todo-list-temp";
+import { deleteProps, OnRead, removeLists } from "../../api/todo-list-api";
 
 interface todolistProps {
   id: number;
